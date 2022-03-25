@@ -209,7 +209,7 @@ def handleLogin(request):
 
     if request.method=="POST":
         # Get the post parameters
-        page=request.POST['next']
+        page=request.POST['page']
         username = request.POST['email']
         password = request.POST['logpass']
         

@@ -60,7 +60,7 @@
             <form action="/signup" method="POST" name="signup" id="signup" class="row g-3" data-parsley-validate>
                 {% csrf_token %}
                 {% if request.GET.next %}
-                  <input type="hidden" name="next" value="{{request.GET.next}}" >
+                  <input type="hidden" name="page" value="{{request.GET.next}}" >
                   {% endif %}
                 <div class="col-md-12 mb-3">
                     <label for="fname" class="form-label">First Name</label>

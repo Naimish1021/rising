@@ -136,7 +136,7 @@
             </form>
         </div>
         {% endif %}
-        <button id="cart">akf</button>
+        
     </div>
 </div>
 
@@ -147,111 +147,124 @@
 
 {% block js %}
 <script>
+    
     if (localStorage.getItem('cart') == null) {
         var cart = {};
       }
       else {
         cart = JSON.parse(localStorage.getItem('cart'));
-        updateCart(cart)
+       
       }
+      updatePopover(cart);
     
-      var method = '';
-      var product_id = 0;
-    
-      //When Add to cart is called
-      // $('.cart').click(function () {
-      $('.divpr').on('click', 'button.cart', function () {
+
+    $('.cart').click(function (e) {
         {% if not user.is_authenticated %}
-        clearCart()
-          window.location.href = "/login?next={{request.path}}";
-    
+        localStorage.clear();
+        window.location.href = "/login?next={{request.path}}";
+  
         {% else %}
         var idStr = this.id.toString();
+        
+        
+
         if (cart[idStr] != undefined) {
           qty = cart[idStr][0] + 1;   //cart[idStr][0] means first id(key)
         }
         else {
-          // cart[idStr] = cart[idStr] + 1;  // cart = {idStr: qty}
-          qty = 1;
-          name = document.getElementById('name' + idStr).innerHTML;
-          price = document.getElementById('price' + idStr).innerHTML;
-          cart[idStr] = [qty, name, parseInt(price)];
-          // cart = {idStr: [qty, name]}
+          qty = 1;       
         }
-        method = 'add';
-        product_id = $('#' + idStr).attr('data-id');
-    
-        // calling the function
-        updateCart(cart, method, product_id, qty);
-        updatePopover(cart);
-        {% endif %}
-      });
-    
-      //Add Popover to cart
-      $('#popcart').popover();
-      updatePopover(cart);
-    
-      function updatePopover(cart) {
-        popStr = "";
-        popStr = popStr + '<h6>Cart for your items in your shopping cart</h6><div class="mx-2">';
-        var i = 1;
-        for (var key in cart) {
-          popStr = popStr + '<b>' + i + '</b>';
-          popStr = popStr + ". " + document.getElementById('name' + key).innerHTML.slice(0, 15) + "... Qty:" + cart[key][0] + "</br>";
-          i += 1
-        }
-        popStr = popStr + `</div> <a href='/product/checkout'><button class='btn btn-primary my-2' id ='checkout'>Checkout</button></a> <button class='btn btn-primary mx-1 my-2' onclick='clearCart()' id ='clearCart'>Clear Cart</button>`;
-        document.getElementById('popcart').setAttribute('data-content', popStr);
-        $('#popcart').popover('show');
-      };
-    
-      function clearCart() {
+        name =" {{product.product_name}}";
+        price ={{product.price}};
+        cart[idStr] = [qty, name, parseInt(price)];
+        product_id = {{product.product_id}};
         
-        localStorage.clear();
-
-      };
-    
-      //Adding + and - button when click on Add to cart
-      function updateCart(cart, method, product_id, qty) {
-        //No of item in cart declare as no_item
-        var no_item = 0;
-        for (var item in cart) {   // here item is pr1 , pr7...
-          // document.getElementById('div'+item).innerHTML=`<button class='btn btn-primary minus' id='minus${item}'> - </button> <span id='val${item}'>  ${cart[item][0]} </span> <button class='btn btn-primary plus' id='plus${item}'> + </button>` ;
-          document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus mx-2'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus mx-2'> + </button>";
-          no_item = no_item + cart[item][0]
-    
-        }
-    
-        localStorage.setItem('cart', JSON.stringify(cart));
-        document.getElementById('cart').innerHTML = no_item;
-        updatePopover(cart)
-    
         data = {
-          'product_id': product_id,
-          'method': method,
-          'qty': qty,
-          'csrfmiddlewaretoken': '{{ csrf_token }}',
-        };
+            'product_id': product_id,
+            'method': 'add',
+            'qty': qty,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+          };
+      
+          if (user != 'AnonymousUser' && product_id != undefined) {
+            $.ajax({
+              type: 'POST',
+              url: '{% url "Cart"%}',
+              data: data,
+      
+              success: function (response) {
+                $('.popover').show();
+              },
+              error: function (data) {
+                console.log(data);
+              }
+            });
+          }
     
-        if (user != 'AnonymousUser' && method != undefined && product_id != undefined) {
-          $.ajax({
-            type: 'POST',
-            url: '{% url "Cart"%}',
-            data: data,
-    
-            success: function (response) {
-            },
-            error: function (data) {
-              console.log(data);
+          var no_item = 0;
+          for (var item in cart) {   // here item is pr1 , pr7...
+
+            no_item = no_item + cart[item][0]
+      
+          }
+      
+          localStorage.setItem('cart', JSON.stringify(cart));
+          document.getElementById('cart').innerHTML = no_item;
+          updatePopover(cart)
+        {% endif %}
+    });
+
+
+    function updatePopover(cart) {
+            popStr = "";
+            popStr = popStr + '<h6>Cart for your items in your shopping cart</h6><div class="mx-2">';
+            var i = 1;
+            for (var key in cart) {
+            popStr = popStr + '<b>' + i + '</b>';
+            popStr = popStr + ". "+cart[key][1]+"... Qty:" + cart[key][0] + "</br>";
+            i += 1
             }
-          })
-        }
-        // document.getElementById('cart').innerHTML = Object.keys(cart).length;
-        //console.log(cart)
+            popStr = popStr + `</div> <a href='/product/checkout'><button class='btn btn-primary my-2' id ='checkout'>Checkout</button></a> <button class='btn btn-primary mx-1 my-2' onclick='clearCart()' id ='clearCart'>Clear Cart</button>`;
+            document.getElementById('popcart').setAttribute('data-content', popStr);
+            $('#popcart').popover('show');
+        };
+
+
+       
+   
+
+    function clearCart() {
+             
+        localStorage.clear();
+        cart = {}
+        method = "fullclear";
+        product_id = 0;
+        qty = 0;
+        
+        data = {
+            'product_id': product_id,
+            'method': method,
+            'qty': qty,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+          };
+        if (user != 'AnonymousUser' && product_id != undefined) {
+            $.ajax({
+              type: 'POST',
+              url: '{% url "Cart"%}',
+              data: data,
+      
+              success: function (response) {
+                  $('#cart').text("0");
+                  $('.popover').hide();
+              },
+              error: function (data) {
+                console.log(data);
+              }
+            });
+
+        updatePopover(cart);
       };
-    
-
-
+    };
     $('.rating').click(function (e) {
         var id = $(this).attr('data-id')
         intid = parseInt(id)

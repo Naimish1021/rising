@@ -35,7 +35,7 @@
             <div class="card align-items-center " style="width: 16.2rem;">
               <img src='/media/{{ i.image }}' class="card-img-top" alt="{{i.product_name}}">
               <div class="card-body">
-                <h5 class="card-title" id="namepr{{i.product_id}}">{{ i.product_name|slice:":20"|lower }}...</h5>
+                <h5 class="card-title" id="namepr{{i.product_id}}">{{ i.product_name|slice:":15"|capfirst }}...</h5>
                 <h6 class="cart-text">Rs. <span id="pricepr{{i.product_id}}"> {{i.price}} </span></h6>
                 <p class="card-text">{{i.description|slice:":80"}}...</p>
                 <div class="d-flex align-item-center m-1">
@@ -184,7 +184,7 @@
         error: function (data) {
           console.log(data);
         }
-      })
+      });
     }
     // document.getElementById('cart').innerHTML = Object.keys(cart).length;
     //console.log(cart)

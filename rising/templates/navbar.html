@@ -34,7 +34,7 @@
                 <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-macos mx-0 border-0 shadow">
                     {% if user.is_authenticated %}
                     <li><a class="dropdown-item " href="/user-profile">Profile</a></li>
-                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    <li><a class="dropdown-item" href="/logout?next={{request.path}}">Logout</a></li>
                     <li><a class="dropdown-item " href="/mypackage">My Packages</a></li>
                     <li><a class="dropdown-item" href="/product/orderdetail">My Orders</a></li>
                     {% else %}
