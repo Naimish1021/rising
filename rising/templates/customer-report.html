@@ -1,0 +1,37 @@
+{% extends 'report_base.html' %}
+
+{% block title %}Customer Invoice{% endblock title %}
+
+{% block reportname %}Customer Report{% endblock reportname %}
+
+{% block currentdate %}{{currentdate|date:'d M, Y'}}{% endblock currentdate %}
+				
+{% block body %}
+<table class="table table-condensed">
+	<thead>
+		<tr>
+			<td><strong>Customer Id</strong></td>
+			<td class="text-center"><strong>Firt Name</strong></td>
+			<td class="text-center"><strong>Last Name</strong></td>
+			<td class="text-right"><strong>Email</strong></td>
+			<td class="text-right"><strong>Phone</strong></td>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- foreach ($order->lineItems as $line) or some such thing here -->
+		{% for customer in customers %}
+		<tr>
+			<td>{{customer.id}}</td>
+			<td class="text-center">{{customer.first_name}}</td>
+			<td class="text-center">{{customer.last_name}}</td>
+			<td class="text-right">{{customer.email}}</td>
+			<td class="text-right">{{customer.mobile}}</td>
+		</tr>
+		<br />
+		{% endfor %}
+
+		<br /><br />
+
+	</tbody>
+</table>
+{% endblock body %}

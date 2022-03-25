@@ -1,0 +1,47 @@
+{% extends 'report/report_base.html' %}
+
+{% block title %} Package {% endblock title %}
+
+{% block reportname %}Package  Report{% endblock reportname %}
+
+{% block currentdate %}{{currentdate|date:'d M, Y'}}{% endblock currentdate %}
+				
+				
+{% block body %}
+{% for package in packages %}
+<br>
+<h1>{{forloop.counter}}. {{package.name}}</h1>
+<h1>shedule :</h1>
+{% for shedule in package.PackageId.all %}
+<h6>Day {{shedule.dayNo}} :{{shedule.placeCaption}}</h6>
+{% endfor %}
+<h3>Available Dates:</h3>
+<table >
+	<thead>
+		<tr>
+            <td>No</td>
+			<td style="width:auto"><strong>Date</strong></td>
+			<td class="text-center"><strong>Guide Name </strong></td>
+			<td class="text-center"><strong>Remaining Space</strong></td>
+			
+		</tr>
+	</thead>
+	<tbody>
+		<!-- foreach ($order->lineItems as $line) or some such thing here -->
+		{% for date in package.packagedate_set.all %}
+		<tr>
+            <td>{{forloop.counter}}</td>
+			<td style="width:auto"> {{date.date|date:'d-m-Y'}}</td>
+			<td class="text-center">{{date.guide}}</td>
+			<td class="text-center">{{date.maxPerson}}</td>
+		</tr>
+		<br />
+		{% endfor %}
+
+	</tbody>
+</table>
+
+
+{% endfor %}
+
+{% endblock body %}

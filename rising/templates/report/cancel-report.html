@@ -1,0 +1,35 @@
+{% extends 'report/report_base.html' %}
+
+{% block title %}Order Invoice{% endblock title %}
+
+{% block reportname %}Cancel Order Report{% endblock reportname %}
+
+{% block currentdate %}{{currentdate|date:'d M, Y'}}{% endblock currentdate %}
+
+				
+{% block body %}
+<table class="table table-condensed">
+	<thead>
+		<tr>
+			<td><strong>Cancel Order Id</strong></td>
+			<td class="text-center"><strong>Order Date</strong></td>
+			<td class="text-center"><strong>Name</strong></td>
+			<td class="text-center"><strong>Order id</strong></td>
+			<td class="text-right"><strong>Order Amount</strong></td>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- foreach ($order->lineItems as $line) or some such thing here -->
+		{% for cancel in cancels %}
+		<tr>
+			<td>{{cancel.id}}</td>
+			<td>{{cancel.date|date:'d-m-Y'}}
+			<td>{{cancel.order.name}}</td>
+			<td>{{cancel.order.order_id}}</td>
+			<td>{{cancel.order.amount}}</td>
+		</tr>
+		<br />
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock body %}

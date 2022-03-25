@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static%}
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets\img\favicon.ico'%}">
+
+  <!-- Box icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+
+  <title>{% block title%} {% endblock title%}</title>
+
+  <style>
+    *{
+      margin: 0px;
+      padding: 0px;
+      font: 100% "Montserrat", sans-serif;
+    }
+    footer:not(.fixed){
+      margin-left: -50px !important;
+      margin-right: -50px !important;
+      max-width: none !important;
+      width: auto !important;
+      padding: 50px !important;
+      overflow: hidden;
+    }
+    footer, .footer {
+    padding: 50px 0;
+    background-color: #444;
+    display: block;
+    margin: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+  .padding-leftright-null {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+    @media (min-width: 992px){
+      .col-md-2 {
+          width: 16.66666667%;
+      }
+    }
+    .row.no-margin {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    footer .copy, .footer .copy {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 18px;
+      margin-top: 18px;
+      color: #d1d2d3;
+      font-family: "Trirong", serif;
+      font-size: 12px;
+      line-height: 20px;
+      font-weight: 300;
+      position: relative;
+    }
+    h6.heading {
+    color: #2F2911;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0;
+}
+[class~="white"] {
+    color: white !important;
+}
+ol, ul {
+    list-style: none;
+}
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+a {
+    color: #ebeff3;
+    text-decoration: none;
+    background-color: transparent;
+}
+.grey-light{
+  color : gray
+}
+.col-md-3
+{
+display: inline-block;
+margin-left:-4px;
+}
+
+.carousel-indicators .active {
+background-color: blue;
+}
+
+.col-md-3 img{
+width: 210px;
+height: 170px;
+}
+
+body .carousel-indicator li{
+background-color: blue;
+}
+.carousel-indicators li {
+  background-color : #74659c;
+}
+body .carousel-indicators{
+bottom: -2.5rem;
+}
+
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon{
+background-color: blue;
+}
+
+.carousel-control-prev,
+.carousel-control-next{
+top: auto;
+bottom: auto;
+padding-top : 222px;
+}
+
+body .no-padding{
+padding-left: 0,
+padding-right: 0;
+}
+</style>
+{% block css %}{% endblock css%}
+<script>
+  var user = '{request.user}';
+</script>
+</head>
+{% load static%}
+<body>
+  {% comment %} <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <img src="{% static 'assets/img/packages/white-logo.png' %}" class="navbar-brand logo" style="max-width:65px;
+    width: auto; display:block">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item {% block activeHome %}{% endblock activeHome%}">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item {% block activeEvent %}{% endblock activeEvent %}">
+          <a class="nav-link" href="/events">Events</a>
+        </li>
+        <li class="nav-item {% block activeproduct %}{% endblock activeproduct %}">
+          <a class="nav-link" href="/product">Product</a>
+        </li>
+        <li class="nav-item {% block activetracker %}{% endblock activetracker %}">
+          <a class="nav-link" href="/product/tracker">Tracker</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="/about-us">About Us</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="/contact-1">Contact Us</a>
+        </li>
+        
+       
+        <li class="nav-item dropdown {% block activeDropdown %}{% endblock activeDropdown %}">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Other
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-macos mx-0 border-0 shadow" style="width: 220px;">
+            <li><a class="dropdown-item active" href="/cancel">Package Cancellation</a></li>
+            <li><a class="dropdown-item" href="/product/cancel">Product Cancellation</a></li>
+            {% block orderInvoice %}
+            {% endblock orderInvoice %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <form method="get" action="/product/search" class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="Search" aria-label="Search" />
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+        Search
+      </button>
+    </form> 
+    <button type="button" id="popcart" class="btn btn-secondary mx-2" data-html="true" data-container="body"
+      data-toggle="popover" data-placement="bottom"
+      data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+      <span>
+        <a href="/product/cart" class="nav-link icon p-0 d-inline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </svg>
+        </a> 
+        (<span id="cart">0</span>)
+      </span>
+    </button>
+   {% comment %} {% if user.is_authenticated %}
+    <p style="color:#fff">
+    Welcome {{ user }}</p>
+    {% endif %} 
+     Welcome {{ user }} 
+  </nav> {% endcomment %}
+
+{% include 'navbar.html' %}
+  {% block body %} {% endblock body%}
+
+  <footer class="full-width mt-5">
+    <div class="container">
+        <div class="row no-margin">
+            <div class="col-sm-4 col-md-2 padding-leftright-null">
+                <h6 class="heading white margin-bottom-extrasmall">Rising Adventure</h6>
+                <ul class="sitemap">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/events">Events</a></li>
+                    <li><a href="/product">Product</a></li>
+                    <li><a href="/singup">SignUp</a></li>
+                    <li><a href="/elements">Elements</a></li>    
+                    <li><a href="/contact">Contacts</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-4 col-md-2 padding-leftright-null">
+                <h6 class="heading white margin-bottom-extrasmall">Useful Links</h6>
+                <ul class="useful-links">
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Download Catalog</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-4 col-md-4 padding-leftright-null">
+                <h6 class="heading white margin-bottom-extrasmall">Contact Us</h6>
+                <ul class="info">
+                  <li class="white">Phone +91 99099 15771</li>
+                  <li class="white">Mail : rising@adventure.com</li>
+                  <li class="white">Monday to Friday <span class="white">9.00 am to 8.00 pm</span><br>Saturday from <span class="white">9.00 am to 12.00 pm</span></li>
+                  <li class="white">Ahmedabad, Gujarat,<br>India</li>
+                </ul>
+            </div>
+            <div class="col-md-4 padding-leftright-null">
+                <h6 class="heading white margin-bottom-extrasmall">Passionate About Nature</h6>
+                <p class="grey-light  class="white"">Sign up for Rising mounthly newsletter and get to know more about our latest adventures and much mores...</p>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!--This is cdn jQuery not a slim.js -->
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script>
+  
+    {% block js %}{% endblock js%}
+
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <title>{% block title %}{% endblock title %}</title>
+	<style>
+		*{
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 1rem;
+		}
+		.invoice-title{
+			display: flex;
+		}
+		.invoice-title h2{
+			float: right;
+		}
+		
+		.invoice-title h3 {
+	float: left;
+}
+
+.info{
+	display: inline;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: large;
+	font-weight: bold;
+}
+.label{
+	font-weight: bolder;
+}
+	</style>
+  </head>
+  <body>
+    
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+    		<div class="invoice-title">
+    			<h1 style="float: right;">Rising Adventure Invoice <h1>{% block reportname %}{% endblock reportname %}</h1></h1>
+    		</div>
+    		<hr>
+    		<div class="row">
+                <div class="row">
+                    <div class="col-xs-6 text-right" style="text-align: right;">
+                        <address>
+                            <strong> Date:</strong><br>
+							{% block currentdate %}{% endblock currentdate %}
+                            <br><br>
+                        </address>
+                    </div>
+                </div>
+                {% block shipped %}
+    			
+                {% endblock shipped %}
+    		</div>
+            {% block orderdate %}
+			
+            {% endblock orderdate %}
+    	</div>
+    </div>
+    
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+    				<h2 class="panel-title"><strong>All Details</strong></h2>
+    			</div>
+    			<div class="panel-body">
+    				<div class="table-responsive">
+                        {% block body %}
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<td><strong>Item</strong></td>
+									<td class="text-center"><strong>Price</strong></td>
+									<td class="text-center"><strong>Product</strong></td>
+									<td class="text-center"><strong>Quantity</strong></td>
+									<td class="text-right"><strong>Totals</strong></td>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- foreach ($order->lineItems as $line) or some such thing here -->
+								{% for cart in carts %}
+								<tr>
+									<td>{{forloop.counter}}</td>
+									<td class="text-center">{{cart.product_id.product_name}}</td>
+									<td class="text-center">{{cart.product_id.price}}</td>
+									<td class="text-center">{{cart.quantity}}</td>
+									<td class="text-right">{{cart.price}}</td>
+								</tr>
+								<br />
+								{% endfor %}
+						
+								<br /><br />
+						
+								<tr>
+									<td class="no-line"></td>
+									<td class="no-line"></td>
+									<td class="no-line text-center"><strong>Total</strong></td>
+									<td class="no-line text-right">{{total}}</td>
+								</tr>
+							</tbody>
+						</table>
+                        {% endblock body %}
+    				</div>
+    			</div>
+				<div class="footer">
+					<ul class="info" style="text-align:center; margin-top:20px">
+						<p class="label">Holidays, Hotel, Ticketing, Cruise, Event, Caterers, Taxi</p>
+					</ul>
+					<hr>
+					<div class="address">
+						<span class="label">Address :</span><p>U-6, Ratnamanli Complex, Nr. Star Bazzar, Satellite Road, JodhpurCross Road, Ahmedabad-380015<br>
+						 <span class="label">Phone :</span> 079 2676 7611 | 9909915771<br>
+						 <span class="label">Site :</span> www.rising@adventure.com<br>
+						 <span class="lebel">Emil :</span>	rising@adventure.com					</p>
+					</div>
+				</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

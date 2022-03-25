@@ -1,0 +1,38 @@
+{% extends 'report/report_base.html' %}
+
+{% block title %}Order Invoice{% endblock title %}
+
+{% block reportname %}Order Report{% endblock reportname %}
+
+{% block currentdate %}{{currentdate|date:'d M, Y'}}{% endblock currentdate %}
+
+				
+{% block body %}
+<table class="table table-condensed">
+	<thead>
+		<tr>
+			<td><strong>Order Id</strong></td>
+			<td class="text-center"><strong>Order Date</strong></td>
+			<td class="text-center"><strong>Name</strong></td>
+			<td class="text-center"><strong>Phone</strong></td>
+			<td class="text-right"><strong>Order Status</strong></td>
+			<td class="text-right"><strong>Order Amount</strong></td>
+
+		</tr>
+	</thead>
+	<tbody>
+		<!-- foreach ($order->lineItems as $line) or some such thing here -->
+		{% for order in orders %}
+		<tr>
+			<td>{{order.order_id}}</td>
+			<td>{{order.order_date|date:'d-m-Y'}}
+			<td>{{order.name}}</td>
+			<td>{{order.phone}}</td>
+			<td>{{order.get_status_display}}</td>
+			<td>{{order.amount}}</td>
+		</tr>
+		<br />
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock body %}

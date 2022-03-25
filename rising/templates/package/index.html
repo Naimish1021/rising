@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+
+{% block title %}Home page{% endblock title %}
+
+
+
+{% load static %}
+
+{% block css %}
+<style>
+    *, :after, :before {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Montserrat,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #1c1c1c;
+        text-align: left;
+        background-color: #fff;
+    }
+
+    .container_3jUZx {
+        background: #fff;
+    }
+
+    .container_3jUZx .event_5esi1 {
+        display: inline-block;
+        width: 200px;
+        border-radius: 0.6rem;
+        box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+        overflow: hidden;
+    }
+
+    .mr-5, .mx-5 {
+        margin-right: 1.5rem!important;
+    }
+
+    .pb-6, .py-6 {
+        padding-bottom: 2rem!important;
+    }
+
+    .pt-6, .py-6 {
+        padding-top: 2rem!important;
+    }
+
+    .p-5 {
+       padding: 1.5rem!important;
+    }
+
+    .text-primary {
+        color: #de5824!important;
+    }
+
+    .text-secondary {
+        color: #717171!important;
+    }
+
+    .mb-1, .my-1 {
+        margin-bottom: 0.25rem!important;
+    }
+
+    .mb-4, .my-4 {
+        margin-bottom: 1rem!important;
+    }
+
+    .m-n5 {
+       margin: -1.5rem!important;
+    }
+    .h1, h1 {
+        font-size: 1.5rem;
+    }
+
+    .container_PeBi9 {
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<!--  Page Content, class footer-fixed if footer is fixed  -->
+<div id="page-content" class="header-static footer-fixed">
+    <!--  Slider  -->
+
+    <div id="flexslider-nav" class="fullpage-wrap small">
+        <ul class="slides">
+            <li style="background-image:url({% static 'assets/img/Rising/Kedarkantha Snow Trek/crousel-img1.jpg'%})">
+                <div class="container text">
+                    <h1 class="white flex-animation">It's time to <br> start your adventures</h1>
+                    <h2 class="white flex-animation">India's Largest Trekking Organization
+                        <br>Rising Adventure.</h2>
+                </div>
+                <div class="gradient dark"></div>
+            </li>
+            <li style="background-image:url({% static 'assets/img/packages/crousel2.jpg' %})">
+                <div class="text container">
+                    <h1 class="white flex-animation no-opacity">Wild nature<br> safe adventure</h1>
+                    <h2 class="white flex-animation no-opacity">Be with us for thriling and enjoying
+                        your tour. <br>Rising Adventure.</h2>
+                </div>
+                <div class="gradient dark"></div>
+            </li>
+            <li style="background-image:url({% static 'assets/img/Rising/Scuba Diving/crousel-img2.jpg' %})">
+                <div class="text container">
+                    <h1 class="white flex-animation no-opacity">Explore your adventure</h1>
+                    <h2 class="white flex-animation no-opacity">Be with us for thriling and enjoying
+                        your tour. <br>Rising Adventure.</h2>
+                    
+                </div>
+                <div class="gradient dark"></div>
+            </li>
+        </ul>
+        <div class="slider-navigation">
+            <a href="#" class="flex-prev" style="margin-left: 30px;"><i class="icon ion-ios-arrow-thin-left"></i></a>
+            <div class="slider-controls-container"></div>
+            <a href="#" class="flex-next" style="margin-right: 30px;"><i class="icon ion-ios-arrow-thin-right"></i></a>
+        </div>
+    </div>
+    <!--  END Slider  -->
+    
+    <div id="home-wrap" class="content-section fullpage-wrap">
+        <!-- Section About -->
+        <div class="row margin-leftright-null">
+            <div class="container">
+                <div class="col-md-12 padding-leftright-null">
+                    <div class="text text-center">
+                        <h2 class="margin-bottom-null title center">About Us</h2>
+                        <p class="heading center grey z-index">Welcome Friends
+                        <div class="padding-onlytop-md">
+                            <p>Rising Adventure Feel the excitement of traveling to a place where you can spend quality time with your family and friends. We pack a lot of things to do and see in a short holiday, for some it may be taxing, for most it is the best way to holiday. Rising Adventure is a Leading Tour Operator and Travel Agent established now a days. We are In Bound and Out Bound Tour Operator having fixed departure escorted tours in India and Abroad, World Wide Hotel Bookings, Air Tickets, Vehicle operator, Cruise Holidays.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Section About -->
+        <!-- Services -->
+        <div class="row no-margin text-center grey-background">
+            <div class="container">
+                <div class="col-md-12 padding-leftright-null text-center">
+                    <h2 class="margin-bottom-null title line center">Services</h2>
+                    <p class="heading center grey margin-bottom-null"></p>
+                </div>
+                <div class="col-md-12 padding-leftright-null">
+                    <div class="col-md-4 padding-leftright-null">
+                        <div class="text padding-md-bottom-null">
+                            <i class="pd-icon-cloudy-day service margin-bottom-null"></i>
+                            <h6 class="heading margin-bottom-extrasmall">In every conditions</h6>
+                            <p class="margin-bottom-null">From the perspective of a traveler who is just about to leave for a trip or planning an activity during a vacation, the weather condition at the destination is what the weather information systems tells traveler: current temperature, cloudiness, rainfall, sunshine, wind, and so on.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-leftright-null">
+                        <div class="text padding-md-bottom-null">
+                            <i class="pd-icon-camp-bag service margin-bottom-null"></i>
+                            <h6 class="heading margin-bottom-extrasmall">Professional Team</h6>
+                            <p class="margin-bottom-null">Rising act on behalf of the tour operator to give practical information, provide assistance, handle services and sell excursions to tourists while at their destinations.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-leftright-null">
+                        <div class="text">
+                            <i class="pd-icon-camping-knief service margin-bottom-null"></i>
+                            <h6 class="heading  margin-bottom-extrasmall">Expert hikers</h6>
+                            <p class="margin-bottom-null">Expert & traveler reviews, photos, videos, itineraries. Find the best Hiking & Walking tour. Featuring good quality, centrally located hotels and expert leadership, our India adventures are great value for money.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Services -->
+        <!-- Carousel Gallery -->
+        <div class="row margin-leftright-null padding-sm">
+            <div class="gallery-carousel">
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip5-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip6-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip7-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip8-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip9-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip10-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip11-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip12-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip2-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip8-small.jpg' %})"></div>
+                </div>
+                <div class="item">
+                    <div class="image" style="background-image:url({% static 'assets/img/trip9-small.jpg' %})"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Carousel Gallery -->
+
+
+        <div class="container_3jUZx">
+            <div class="container">
+                <div class="py-6">
+                    <div class="col-md-12 padding-leftright-null text-center">
+                        <h2 class="margin-bottom-null title line center">Highlighted Events</h2>
+                        <p class="heading center grey margin-bottom-null">Recommended camps by our Instructors</p>
+                    </div>
+                    <div class="m-n5 p-5 container_PeBi9">
+
+                        {% for package in allPackages  %}
+                        <div class="event_5esi1 mr-5">
+                            <a href="/events/{{package.id}}">
+                                <img loading="lazy" src="/media/{{package.image}}" class="img-fluid">
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  Section Image Background with overlay  -->
+        <div class="row margin-leftright-null grey-background" style="display: flex; justify-content: center; margin: 1.5rem 0px;">
+            <div class="bg-img overlay simple-parallax responsive"
+                style="background-image:url({% static 'assets/img/testimonials.jpg' %})">
+                <div class="container">
+                    <!-- Testimonials -->
+                    <section class="testimonials-carousel-simple col-md-12 text padding-bottom-null">
+                        <div class="item padding-leftright-null">
+                            <div class="padding-top-null padding-bottom-null">
+                                <blockquote class="margin-bottom-small white">“The world is a book and those who do not travel read only one page.” <em
+                                        class="small grey-light">~ Saint Augustine</em></blockquote>
+                            </div>
+                        </div>
+                        <div class="item padding-leftright-null">
+                            <div class="padding-top-null padding-bottom-null">
+                                <blockquote class="margin-bottom-small white">“Life is either a daring adventure or nothing at all” <em
+                                        class="small grey-light">~ Helen Keller</em></blockquote>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- END Testimonials -->
+                </div>
+            </div>
+        </div>
+        <!--  END Section Image Background with overlay  -->
+      
+        
+   
+</div>
+<!--  END Page Content, class footer-fixed if footer is fixed  -->
+{% endblock body %}
+
+{% block js %}
+
+{% endblock js %}

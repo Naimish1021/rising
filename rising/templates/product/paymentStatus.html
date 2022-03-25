@@ -1,0 +1,15 @@
+{% extends 'base2.html' %}
+
+{% block title %}  Payment Status - Rising E-Cart {% endblock %}
+
+{% block body %}
+
+<h1>Payment Status regarding your order Id {{response.ORDERID}}.</h1>
+{% if response.RESPCODE == '01' %}
+    ORDER SUCCESS
+{% else%}
+    ORDER FAILARE
+{% endif%}
+
+{{response}}
+{% endblock %}

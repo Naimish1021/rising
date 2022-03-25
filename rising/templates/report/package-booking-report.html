@@ -1,0 +1,50 @@
+{% extends 'report/report_base.html' %}
+
+{% block title %}Package  Invoice{% endblock title %}
+
+{% block reportname %}Package Booking{% endblock reportname %}
+
+{% block currentdate %}{{currentdate|date:'d M, Y'}}{% endblock currentdate %}
+
+				
+{% block body %}
+{% for date in dates %}
+<h1>{{forloop.counter}}. {{date.package}} : {{date.date}}</h1>
+<h4>Guide Name :{{date.guide.first_name}} {{date.guide.last_name}}</h4>
+<h6>Contact:{{date.guide.mobile}} </h6>
+
+{% if date.package_booking_set.all.count >= 1 %}
+
+
+<table>
+	<thead>
+		<tr>
+			<td><strong>Bookin Id</strong></td>
+			<td class="text-center"><strong>Booking Date</strong></td>
+			<td class="text-center"><strong>Name</strong></td>
+			<td class="text-center"><strong>Email</strong></td>
+            <td class="text-center"><strong>Join From</strong></td>
+			<td class="text-right"><strong>No. Of Person</strong></td>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- foreach ($booking->lineItems as $line) or some such thing here -->
+		{% for booking in date.package_booking_set.all %}
+        
+        
+		<tr>
+			<td>{{booking.booking_id}}</td>
+			<td>{{booking.booking_date|date:'d-m-Y'}}
+			<td>{{booking.name}}</td>
+			<td>{{booking.email}}</td>
+            <td>{{booking.joinfrom.place}}</td>
+			<td>{{booking.noOfPerson}}</td>
+            </tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+<h6>Not any booking is there.</h6>
+{% endif %}
+{% endfor %}
+{% endblock body %}

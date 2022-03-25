@@ -1,0 +1,38 @@
+{% extends 'base2.html' %}
+
+{% block title %} Product Cancellation - Rising E-Cart{% endblock %}
+
+{% block activeDropdown %} active {% endblock activeDropdown %}
+
+{% block body %}
+
+<div class="container">
+ <form action="{{order.order_id}}" method="POST" >
+   {% csrf_token %}
+  <input value="{{order.order_id}}" style="display:none"  name="id"> 
+  <h2>Order ID :{{order.order_id}}</h2>
+  <div class="form-floating my-5">
+    <label for="floatingTextarea2">Write any some reason for order Order Return</label>
+
+    <textarea class="form-control" placeholder="reason" id="floatingTextarea2" style="height: 100px" name="reason"></textarea>
+    <button type="submit" class="btn btn-danger my-2" id="add" minlength=20 >Return Order</button>
+      </div>
+ </form>
+
+ 
+    
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $('form').on('submit', function() {
+        if(confirm('Do you really want to return  order?')) {
+            return true;
+        }
+    
+        return false;
+    });
+</script>
+{% endblock %}

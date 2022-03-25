@@ -1,0 +1,112 @@
+{% extends 'base2.html' %}
+
+{% block activeEvent %} active {% endblock activeEvent%}
+
+{% block title %}Payment with Rising by Razorpay{% endblock title %}
+
+{% block css %}
+<style>
+.col-4 {
+    margin: 4px 10px;
+    padding: 10px 14px;
+    border: 2px solid gray;
+    background-color: #f3f3f5;
+    border-radius: 8px;
+}
+.col-2 {
+    margin: 4px 10px;
+    padding: 10px 14px;
+    border: 2px solid gray;
+    background-color: #f3f3f5;
+    border-radius: 8px;
+    flex: 0 0 auto;
+    width: 16.66666667%;
+}
+</style>
+{% endblock css %}
+
+{% block body %}
+{% load static %}
+
+    <div class="container m-auto">
+        <h3 class="display-4 fw-normal">Booking Details</h3>
+        <div class="row mb-3">
+            <div class="col-2 themed-grid-col gray-light">Booking Id</div>
+            <div class="col-4 themed-grid-col gray-light">{{booking.booking_id}}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-2 themed-grid-col gray-light">Pacakge Name</div>
+            <div class="col-4 themed-grid-col gray-light">{{booking.package}}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-2 themed-grid-col gray-light">Booking Date</div>
+            <div class="col-4 themed-grid-col gray-light">{{booking.booking_date | date:"M d, Y"}}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-2 themed-grid-col gray-light">Amount</div>
+            <div class="col-4 themed-grid-col gray-light">{{booking.amount}}₹</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-2 themed-grid-col gray-light">Name</div>
+            <div class="col-4 themed-grid-col gray-light">{{booking.name}}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-2 themed-grid-col gray-light">Email</div>
+            <div class="col-4 themed-grid-col gray-light">{{booking.email}}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-2 themed-grid-col gray-light">Phone</div>
+            <div class="col-4 themed-grid-col gray-light">{{booking.phone}}</div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-2 themed-grid-col gray-light">Address</div>
+            <div class="col-4 themed-grid-col gray-light">{{booking.address}}</div>
+        </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" id="rzp-button1">Pay Now</button>
+          </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+    
+    var options = {
+        "key": "rzp_test_CbBqgB9J6EAyeg", // Enter the Key ID generated from the Dashboard
+        "amount": ({{booking.amount}}*100), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Rising Adventure",
+        "description": "Rising tour and travel",
+        "image": "{%static 'assets/img/packages/black-logo.jpg'%}",
+        "order_id": "{{bookingId}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 2
+        "handler": function (response){
+            //alert('Razorpay Payment Id',response.razorpay_payment_id);
+            //alert('Razorpay Booking Id',response.razorpay_booking_id);
+            //alert('Razorpay Signature',response.razorpay_signature);
+            window.location.href = "/success";
+
+        },
+        "theme": {
+            "color": "#528FF0"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.booking_id);
+            alert(response.error.metadata.payment_id);
+    });
+    document.getElementById('rzp-button1').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+    </script>
+{% endblock body%}
+
+
+
+

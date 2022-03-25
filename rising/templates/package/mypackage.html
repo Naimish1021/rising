@@ -1,0 +1,64 @@
+{% extends 'base2.html' %}
+
+{% block title %} My package - Rising E-Cart{% endblock %}
+
+{% block activeDropdown %} active {% endblock activeDropdown %}
+
+{% block body %}
+{% for message in messages  %}            
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              <strong>Message : </strong> {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endfor %}
+<div class="container">
+    <h2>My Packages</h2>
+    
+    {% for package in packages %}
+  
+    <button class="btn btn-primary mb-3" type="button" data-toggle="collapse" data-target="#collapseExample{{package.booking_id}}" aria-expanded="false" aria-controls="collapseExample">
+      Package Booking Id {{package.booking_id}} :   {{package.booking_date|date:'d-m-Y'}}
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+      </svg>
+    </button>
+  <br>
+<div class="collapse" id="collapseExample{{package.booking_id}}">
+  <div class="card card-body">
+   <ul class="list-group list-group-flush">
+     
+       <li class="list-group-item">Event Name :{{package.package.package }}</li>
+       <li class="list-group-item">Event Date : {{package.package.date}}</li>
+       <li class="list-group-item">Bookin Status : {{package.get_status_display}}</li>
+       <li class="list-group-item">Join Us From : {{package.joinFrom.join_from}}</li>
+       <li class="list-group-item">No. of Person : {{package.noOfPerson}}</li>
+       <li class="list-group-item">Total Amount : {{package.amount}}₹</li>
+   
+    {% if package.status == 1  %}
+      <li class="list-group-item">No of Day left : {{package.package.date|timeuntil:today}}</li>
+      {% if package.package.date > todayPlus5days %}  
+        <a href="cancel/{{package.booking_id}}" class="btn btn-info my-3" style="width:250px">Cancel Package</a>    
+      {% else %}
+      <li class="list-group-item">Cancellation Time is Over.<br> If you want to cancel package please visit our office.</li>
+      {% endif %} 
+    {% endif %}
+  </ul>
+
+  </div>
+</div>
+
+  {% endfor %}
+    
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    //Find and Set cart from localStorage 
+ 
+</script>
+
+{% endblock %}

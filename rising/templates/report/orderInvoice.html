@@ -1,0 +1,66 @@
+{% extends 'report/report_base.html' %}
+
+{% block title %}Order Invoice{% endblock title %}
+
+{% block reportname %}Order Report{% endblock reportname %}
+
+{% block currentdate %}{{currentdate|date:'d M, Y'}}{% endblock currentdate %}
+
+{% block shipped %}
+    			<div style="text-align: right;">
+    				<address>
+        			<strong>Shipped To:</strong><br>
+    					{{order.email}}<br>
+    					{{order.phone}}<br>
+    					{{order.city}}<br>
+    					{{order.address}}<br>
+    				</address>
+    			</div>
+                {% endblock shipped %}
+				{% block orderdate %}
+				<div class="row">
+					<div class="col-xs-6 text-right" style="text-align: right;">
+						<address>
+							<strong>Order Date:</strong><br>
+							{{order.order_date|date:'M d, Y'}}<br><br>
+						</address>
+					</div>
+				</div>
+				{% endblock orderdate %}
+				
+{% block body %}
+<table class="table table-condensed">
+	<thead>
+		<tr>
+			<td><strong>Item</strong></td>
+			<td class="text-center"><strong>Price</strong></td>
+			<td class="text-center"><strong>Product</strong></td>
+			<td class="text-center"><strong>Quantity</strong></td>
+			<td class="text-right"><strong>Totals</strong></td>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- foreach ($order->lineItems as $line) or some such thing here -->
+		{% for cart in carts %}
+		<tr>
+			<td>{{forloop.counter}}</td>
+			<td class="text-center">{{cart.product_id.product_name}}</td>
+			<td class="text-center">{{cart.product_id.price}}</td>
+			<td class="text-center">{{cart.quantity}}</td>
+			<td class="text-right">{{cart.price}}</td>
+		</tr>
+		<br />
+		{% endfor %}
+
+		<br /><br />
+		<br><br>
+
+		<tr>
+			<td class="no-line"></td>
+			<td class="no-line"></td>
+			<td class="no-line text-center"><strong>Total</strong></td>
+			<td class="no-line text-right">{{total}}</td>
+		</tr>
+	</tbody>
+</table>
+{% endblock body %}

@@ -1,0 +1,77 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <img src="{% static 'assets/img/packages/white-logo.png' %}" class="navbar-brand logo" style="max-width:80px;
+    width: auto; display:block">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% block activeHome %}{% endblock activeHome%}">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item {% block activeEvent %}{% endblock activeEvent %}">
+                <a class="nav-link" href="/events">Events</a>
+            </li>
+            <li class="nav-item {% block activeproduct %}{% endblock activeproduct %}">
+                <a class="nav-link" href="/product">Product</a>
+            </li>
+            
+            <li class="nav-item ">
+                <a class="nav-link" href="/about-us">About Us</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/contact-1">Contact Us</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown2" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if user.is_authenticated %}{{user.email}}
+                    {% else %} User{% endif %}</a>
+                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-macos mx-0 border-0 shadow">
+                    {% if user.is_authenticated %}
+                    <li><a class="dropdown-item " href="/user-profile">Profile</a></li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    <li><a class="dropdown-item " href="/mypackage">My Packages</a></li>
+                    <li><a class="dropdown-item" href="/product/orderdetail">My Orders</a></li>
+                    {% else %}
+                    <li><a class="dropdown-item " href="/login?next={{request.path}}">Login</a></li>
+                    <li><a class="dropdown-item" href="/signup?next={{request.path}}">SignUp</a></li>
+
+                    {% endif %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <form method="get" action="/product/search" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="Search"
+            aria-label="Search" />
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+            Search
+        </button>
+    </form>
+    <a href="/product/cart" class="nav-link icon p-0 d-inline">
+    <button type="button" id="popcart" class="btn btn-secondary mx-2 my-lg-0" data-html="true" data-container="body"
+        data-toggle="popover" data-placement="bottom"
+        data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+        <span>
+           
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+           
+            (<span id="cart">{{request.session.cart}}</span>)
+        </span>
+    </button>
+</a>
+    {% comment %} {% if user.is_authenticated %}
+    <p style="color:#fff">
+        Welcome {{ user }}</p>
+    {% endif %}
+    Welcome {{ user }} {% endcomment %}
+</nav>

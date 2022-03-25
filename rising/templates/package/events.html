@@ -1,0 +1,332 @@
+{% extends 'base.html' %}
+
+{% block title %} events {% endblock title %}
+{% load humanize %}
+{% block activeEvent %}active-item{% endblock activeEvent %} 
+
+{% block css %}
+<style>
+    *, :after, :before {
+    box-sizing: border-box;
+}
+
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1140px;
+}
+
+.mt-5, .my-5 {
+    margin-top: 1.5rem!important;
+}
+
+.container {
+    width: 100%;
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.row {
+    display: -webkit-box;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -16px;
+    margin-left: -16px;
+}
+
+.container_xy0hN {
+    display: block;
+    position: relative;
+    white-space: normal;
+    border-radius: 1rem;
+    padding: 8px;
+    box-shadow: 0 0 0.125rem rgb(0 0 0 / 10%), 0 0.25rem 0.5rem rgb(0 0 0 / 8%);
+    background: #fff;
+}
+
+.mb-5, .my-5 {
+    margin-bottom: 1.5rem!important;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+a {
+    {% comment %} color: #de5824; {% endcomment %}
+    background-color: transparent;
+}
+
+.container_5_N72 {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.6rem;
+}
+
+.VueCarousel {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.VueCarousel-wrapper {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.VueCarousel-inner {
+    display: flex;
+    flex-direction: row;
+    backface-visibility: hidden;
+}
+.VueCarousel-slide {
+    flex-basis: inherit;
+    flex-grow: 0;
+    flex-shrink: 0;
+    user-select: none;
+    backface-visibility: hidden;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    outline: none;
+}
+
+.container_5_N72 .image_3zYNJ {
+    width: 100%;
+    height: 180px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+img, svg {
+    vertical-align: middle;
+}
+
+img {
+    border-style: none;
+}
+
+.VueCarousel-pagination[data-v-438fd353] {
+    width: 100%;
+    text-align: center;
+}
+
+.container_5_N72 .VueCarousel-pagination {
+    z-index: 10;
+    bottom: 0;
+}
+
+.VueCarousel-pagination {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+}
+
+.VueCarousel-dot-container[data-v-438fd353] {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.container_5_N72 .VueCarousel-dot-container {
+    background: transparent;
+    padding: 0!important;
+}
+
+.VueCarousel-dot-container {
+    margin-top: 0!important;
+    display: -webkit-inline-box!important;
+    display: inline-flex!important;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgba(0,0,0,.25);
+    padding: 6px!important;
+    border-radius: 20px;
+}
+
+.VueCarousel-dot[data-v-438fd353] {
+    display: inline-block;
+    cursor: pointer;
+    appearance: none;
+    border: none;
+    background-clip: content-box;
+    box-sizing: content-box;
+    padding: 0;
+    border-radius: 100%;
+    outline: none;
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.p-1 {
+    padding: 0.25rem!important;
+}
+
+.mb-1, .my-1 {
+    margin-bottom: 0.25rem!important;
+}
+
+.mt-3, .my-3 {
+    margin-top: 0.75rem!important;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.h3, h3 {
+    font-size: 1rem;
+}   
+
+.h5, h5 {
+    font-size: .75rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.text-secondary {
+    color: #717171!important;
+}
+
+.small, small {
+    font-size: 80%;
+    font-weight: 500;
+}
+
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+}
+
+.VueCarousel-dot {
+    margin-top: 0!important;
+}
+
+[type=button], [type=reset], [type=submit], button {
+    -webkit-appearance: button;
+}
+
+button, select {
+    text-transform: none;
+}
+
+button, input {
+    overflow: visible;
+}
+
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button {
+    border-radius: 0;
+}
+
+</style>
+{% endblock css %}
+
+{% load static %}
+{% block body %}
+
+<!--  Page Content, class footer-fixed if footer is fixed  -->
+<div id="page-content" class="header-static footer-fixed">
+    <!--  Slider  -->
+    <div id="flexslider-nav" class="fullpage-wrap small">
+        <ul class="slides">
+            <li style="background-image:url({% static 'assets/img/Rising/Kedarkantha Snow Trek/crousel-img1.jpg'%})">
+                <div class="container text">
+                    <h1 class="white flex-animation">It's time to <br> start your adventures</h1>
+                    <h2 class="white flex-animation">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        <br>Veniam, facilis.
+                    </h2>
+                    
+                </div>
+                <div class="gradient dark"></div>
+            </li>
+            <li style="background-image:url({% static 'assets/img/packages/crousel2.jpg'%})">
+                <div class="text container">
+                    <h1 class="white flex-animation no-opacity">Wild nature<br> safe adventure</h1>
+                    <h2 class="white flex-animation no-opacity">Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. <br>Veniam, facilis.</h2>
+                    
+                </div>
+                <div class="gradient dark"></div>
+            </li>
+            <li style="background-image:url({% static 'assets/img/Rising/Scuba Diving/crousel-img2.jpg' %})">
+                <div class="text container">
+                    <h1 class="white flex-animation no-opacity">Explore your adventure</h1>
+                    <h2 class="white flex-animation no-opacity">Be with us for thriling and enjoying
+                        your tour. <br>Rising Adventure.</h2>
+                    
+                </div>
+                <div class="gradient dark"></div>
+            </li>
+        </ul>
+        <div class="slider-navigation">
+            <a href="#" class="flex-prev"><i class="icon ion-ios-arrow-thin-left"></i></a>
+            <div class="slider-controls-container"></div>
+            <a href="#" class="flex-next"><i class="icon ion-ios-arrow-thin-right"></i></a>
+        </div>
+    </div>
+    <!--  END Slider  -->
+    
+    <!-- Start Evnets  -->
+    <div class="container mt-5">
+        <div class="col-md-12 padding-leftright-null padding-onlybottom-md text-center">
+            <h2 class="margin-bottom-null title line center">Our Events</h2>
+            <p class="heading center grey margin-bottom-null">Events which we are organize of future</p>
+        </div>
+        <div class="row">
+            {% for package in allPackages  %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <a href="/events/{{package.id}}"
+                    class="mb-5 container_xy0hN">
+                    <div class="container_5_N72">
+                        <div class="VueCarousel">
+                            <div class="VueCarousel-wrapper">
+                                <div class="VueCarousel-inner"
+                                    style="transform: translate(0px, 0px); transition: transform 0.5s ease 0s; flex-basis: 327px; visibility: visible; height: auto;">
+                                    <div tabindex="-1" aria-hidden="true" role="tabpanel" class="VueCarousel-slide">
+                                        <img
+                                            loading="lazy" sizes="(max-width: 2000px) 100vw, 2000px"
+                                            src="/media/{{package.eventpageimage}}"                                          
+                                            class="image_3zYNJ"></div>
+                                </div>
+                            </div>
+                            <!---->
+                        </div>
+                    </div>
+                    <div class="mt-3 p-1">
+                        <h5 class="h3 text-truncate mb-1">{{package.name}}</h5>
+                        <div class="small text-secondary">
+                            From ₹ {{package.amount|intcomma}}/- •
+                            <i class="uil uil-calendar-alt"></i>{{package.days}} days / {{package.nights}} nights
+                        </div>
+                    </div>
+                    <!---->
+                </a>
+            </div>
+            {% endfor %}
+                
+        </div>
+    </div>
+    <!-- End Events  -->
+
+<!--  END Page Content, class footer-fixed if footer is fixed  -->
+{% endblock body %}
+
+{% block js %}
+
+{% endblock js %}

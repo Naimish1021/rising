@@ -1,0 +1,36 @@
+{% extends 'report/report_base.html' %}
+
+{% block title %}product Invoice{% endblock title %}
+
+{% block reportname %}Product Report{% endblock reportname %}
+
+{% block currentdate %}{{currentdate|date:'d M, Y'}}{% endblock currentdate %}
+
+				
+{% block body %}
+<table class="table table-condensed">
+	<thead>
+		<tr>
+			<td class="text-center"><strong> Id</strong></td>
+			<td class="text-center"><strong>Name</strong></td>
+			<td class="text-center"><strong>Category</strong></td>
+			<td class="text-right"><strong>Current Stock</strong></td>
+			<td class="text-right"><strong>Price</strong></td>
+
+		</tr>
+	</thead>
+	<tbody>
+		<!-- foreach ($product->lineItems as $line) or some such thing here -->
+		{% for product in products %}
+		<tr>
+			<td>{{product.product_id}}</td>
+			<td>{{product.product_name}}</td>
+			<td>{{product.category}}</td>
+			<td>{{product.quntity}}</td>
+			<td>{{product.price}}</td>
+		</tr>
+		<br />
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock body %}

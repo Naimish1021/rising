@@ -1,0 +1,120 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+{% load humanize %}
+{% load static %}
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block content_title %} {% trans 'Dashboard' %} {% endblock %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> 
+        {% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item">{% trans 'Dashboard' %}</li>
+</ol>
+{% endblock %}
+
+{% block extrastyle %}
+<style>
+    .card-title {
+        float: none;
+        font-size: 1.8rem;
+        font-weight: 400;
+        margin: 0;
+    }
+</style>{% endblock %}
+{% block content %}
+{% get_side_menu using="app_list" as dashboard_list %}
+{% if dashboard_list %}
+{% widthratio dashboard_list|length 2 1 as middle %}
+{% endif %}
+
+{% if request.user.is_superuser %}
+
+                            {% for notification in notifications %}
+                                {% if notification.type == 1 %}
+                                    <div class="alert alert-success alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" id='{{notification.id}}' aria-hidden="true">×
+                                        </button>
+                                        <i class="icon fa fa-check"></i>You Got new package booking with <a href='/admin/package/package_booking/{{notification.pid}}/change/'> Booking id {{notification.pid}}</a>
+                                    </div>
+                                {% elif notification.type == 2 %}
+                                    <div class="alert alert-info alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" id='{{notification.id}}' aria-hidden="true">×
+                                        </button>
+                                        <i class="icon fa fa-info"></i>You Got  Order with <a href='/admin/product/order/{{notification.pid}}/change/' > Order id  {{notification.pid}}</a>
+                                    </div>
+                                {% elif notification.type == 3 %}
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" id='{{notification.id}}' aria-hidden="true">×
+                                        </button>
+                                        <i class="icon fa fa-ban"></i>You Got Cancel Order with <a href='/admin/product/order/{{notification.pid}}/change/' > Order id  {{notification.pid}}</a>  
+                                    </div>
+                                {% elif notification.type == 4 %}
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" id='{{notification.id}}' aria-hidden="true">×
+                                        </button>
+                                        <i class="icon fa fa-exclamation-triangle"></i>You Got Return Order with <a href='/admin/product/orderreturn/{{notification.pid}}/change/' > Order id  {{notification.pid}}</a>
+                                    </div>
+                                    {% elif notification.type == 5 %}
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" id='{{notification.id}}' aria-hidden="true">×
+                                        </button>
+                                        <i class="icon fa fa-info"></i>You got Package Cancel With <a href='/admin/package/packagecancel/{{notification.pid}}/change/' > Package Id  {{notification.pid}}</a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+<div class="card-deck mb-3 text-center">
+    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+        <h3 class="card-header">Total Product Revenue</h3>
+        <div class="card-body">
+            <h4 class="card-title"> {{total_order_amount|intcomma}} &#8377</h4>
+            <p class="card-text mt-2">Total Order : {{total_order}}</p>
+        </div>
+    </div>
+    <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+        <h2 class="card-header">Total Tour Revenue</h2>
+        <div class="card-body">
+            <h4 class="card-title"> {{total_tour_amount|intcomma}} &#8377</h4>
+            <p class="card-text mt-2">Total Tour Complete : {{total_tour}}</p>
+        </div>
+    </div>
+    <div class="card text-white bg-light mb-3" style="max-width: 18rem;">
+        
+            <a role="button" href="/customer_reports" class="btn btn-success mb-3" style="color:white !important;">Customer Report</a>
+            <a role="button" href="/booking_reports" class="btn btn-primary mb-3" style="color:white !important;">Booking Report</a>
+            <a role="button" href="/order_reports" class="btn btn-success mb-3" style="color:white !important;">Order Report</a>
+            <a role="button" href="/cancel_reports" class="btn btn-primary mb-3" style="color:white !important;">Cancel Report</a>
+     
+    </div>
+</div>
+{% else %}
+{% endif %}
+{% block extrajs %}
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+<script>
+    window.setTimeout(function () {
+        location.href = "/admin";
+    }, 100000); 
+$('.close').on('click',function()
+{
+    id = this.id;
+    $.ajax({
+        type: 'POST',
+        url: '{% url "Notification"%}',
+        data: {'id':id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (data) {
+          console.log(data);
+        }
+    })
+});
+</script>
+{% endblock %}
+
+{% endblock %}
+
