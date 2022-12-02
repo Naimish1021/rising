@@ -202,73 +202,75 @@ def error404(request):
 
 # APIs Views 
 def handleLogin(request):
-    
-    
-    if request.method == 'GET':
-        return render(request, 'login.html')
+	
+	
+	if request.method == 'GET':
+		page = request.GET.get('next')
+		print(page)
+		return render(request, 'login.html',{'next':page})
 
-    if request.method=="POST":
-        # Get the post parameters
-        page=request.POST['page']
-        username = request.POST['email']
-        password = request.POST['logpass']
-        
-        try:
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-              
-                
-                if user.is_superuser:
-                    return redirect('/admin')
-                else:
-                    return redirect(page)
-               
-            else:
-                messages.info(request, 'Email OR password is incorrect')
-                return redirect('/login?next='+request.GET['next'])
-        except:
-            messages.error(request, 'Invalid Email and password')
-            return redirect('/login?next='+request.GET['next'])
+	if request.method=="POST":
+		# Get the post parameters
+		page=request.POST['page']
+		username = request.POST['email']
+		password = request.POST['logpass']
+		
+		try:
+			user = authenticate(request, username=username, password=password)
+			if user is not None:
+				login(request, user)
+			  
+				
+				if user.is_superuser:
+					return redirect('/admin')
+				else:
+					return redirect(page)
+			   
+			else:
+				messages.info(request, 'Email OR password is incorrect')
+				return redirect('/login?next='+request.GET.get('next'))
+		except:
+			messages.error(request, 'Invalid Email and password')
+			return redirect('/login?next='+request.GET.get('next'))
 
 
-    return render(request, 'package/Error404.html')
+	return render(request, 'package/Error404.html')
 
 def handleSignUp(request):
-    if request.method == 'GET':
-        return render(request, 'signup.html')
+	if request.method == 'GET':
+		return render(request, 'signup.html')
 
-    if request.method == "POST":
-        # Get the post parameters
-        page = request.POST['page']
-        fname = request.POST['fname']
-        lname = request.POST['lname']
-        phone = request.POST['phone']
-        email = request.POST['email']
-        pass1 = request.POST['pass1']
-        address = request.POST['address']
-        page=request.POST['next']
-        # check for errorneous input
+	if request.method == "POST":
+		# Get the post parameters
+		page = request.POST['page']
+		fname = request.POST['fname']
+		lname = request.POST['lname']
+		phone = request.POST['phone']
+		email = request.POST['email']
+		pass1 = request.POST['pass1']
+		address = request.POST['address']
+		# page=request.GET.get['next']
+		# check for errorneous input
 
-        if User.objects.filter(email__iexact = email).exists():
-            messages.error(request,'Email is already exists')
-            return redirect('/signup')
-    
-          
-        user = User.objects.create(email=email,first_name=fname,last_name=lname,mobile=phone,address=address)
-        user.set_password(pass1)
-        user.save()
-        login(request, user)
-        
-        messages.success(request, 'Your account has been created successfully .')
-        return redirect(page)
+		if User.objects.filter(email__iexact = email).exists():
+			messages.error(request,'Email is already exists')
+			return redirect('/signup')
+	
+		  
+		user = User.objects.create(email=email,first_name=fname,last_name=lname,mobile=phone,address=address)
+		user.set_password(pass1)
+		user.save()
+		login(request, user)
+		
+		messages.success(request, 'Your account has been created successfully .')
+		return redirect(page)
 
-    return render(request, 'package/Error404.html')
+	return render(request, 'package/Error404.html')
 
 def handleLogout(request):
-    logout(request)
-    page = request.GET['next']
-    return redirect(page)
+	logout(request)
+	page = request.GET['next']
+	return redirect(page)
 	
 def handleForget(request):
 	if request.method == 'GET':
@@ -318,27 +320,27 @@ def profile(request):
 
 @pdf_decorator(pdfname='Customer.pdf')
 def customer_reports(request):
-    currentdate = datetime.datetime.now
-    customers = User.objects.filter(role=4)
-    return render(request, 'report/customer-report.html',{'customers' : customers, 'currentdate': currentdate})
+	currentdate = datetime.datetime.now
+	customers = User.objects.filter(role=4)
+	return render(request, 'report/customer-report.html',{'customers' : customers, 'currentdate': currentdate})
 
 @pdf_decorator(pdfname='Booking.pdf')
 def booking_reports(request):
-    currentdate = datetime.datetime.now
-    bookings = Package_Booking.objects.exclude(status=3)
-    return render(request, 'report/booking-report.html',{'bookings' : bookings, 'currentdate': currentdate})
+	currentdate = datetime.datetime.now
+	bookings = Package_Booking.objects.exclude(status=3)
+	return render(request, 'report/booking-report.html',{'bookings' : bookings, 'currentdate': currentdate})
 
 @pdf_decorator(pdfname='Order.pdf')
 def order_reports(request):
-    currentdate = datetime.datetime.now
-    orders = Order.objects.exclude(status=3)
-    return render(request, 'report/order-report.html',{'orders' : orders, 'currentdate': currentdate})
+	currentdate = datetime.datetime.now
+	orders = Order.objects.exclude(status=3)
+	return render(request, 'report/order-report.html',{'orders' : orders, 'currentdate': currentdate})
 
 @pdf_decorator(pdfname='Cancel.pdf')
 def cancel_reports(request):
-    currentdate = datetime.datetime.now
-    cancels = OrderCancel.objects.all()
-    return render(request, 'report/cancel-report.html',{'cancels' : cancels, 'currentdate': currentdate})
+	currentdate = datetime.datetime.now
+	cancels = OrderCancel.objects.all()
+	return render(request, 'report/cancel-report.html',{'cancels' : cancels, 'currentdate': currentdate})
 
 
 

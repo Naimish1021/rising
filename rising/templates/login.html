@@ -67,9 +67,7 @@
         
             <form action="/login" method="POST" name="login" id="login" class="row g-3" data-parsley-validate>
                 {% csrf_token %}
-                {% if request.GET.next %}
-                  <input type="hidden" name="page" value="{{request.GET.next}}" >
-                  {% endif %}
+                
                 <div class="col-md-12 mb-3">
                     <label for="logname" class="form-label">Email</label>
                     <input type="email" class="form-control" id="InputEmail" name="email" placeholder="Email"
@@ -83,8 +81,16 @@
                 <div class="col-6 my-4 mb-3">
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>
+                {% if request.GET.next %}
+                  <input type="hidden" name="page" value="{{request.GET.next}}" >
+                  {% endif %}
                 <div class="col-6 my-4 mb-3">
+                  {% if request.GET.next %}
+                  <a href="/signup?next={{request.GET.next}}" style="color:#fff">Create your Rising account</a> <br />
+                  {% else %}
                   <a href="/signup" style="color:#fff">Create your Rising account</a> <br />
+                  {% endif %}
+                  
                   <a href="{% url 'reset_password' %}" style="color:#fff">Forget Password</a>
                 </div>
             </form>
